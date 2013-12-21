@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Socket.io Test</title>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+
+	  $(document).ready(function(){
+
+	  	var socket = io.connect('http://localhost');
+	  	socket.on('news', function (data) {
+	  		$('#liveFeed').append(data + '<br />');
+	  	});
+
+	  	$('#chatForm').submit(function(e){
+	  		e.preventDefault();
+	  		socket.emit('sendMessage', $('#chatInput').val());
+	  		$('#chatInput').val('');
+	  	});
+
+	  	socket.on('newMessage', function(data){
+	  		$('#liveFeed').append(data + '<br />');
+	  	});
+
+	  });
+	</script>
+
+
+</head>
+<body>
+
+<div id="liveFeed"></div>
+
+<form id="chatForm">
+	<input id="chatInput" size="50" type="text"></input>
+	<input type="submit"></input>
+</form>
+	
+
+</body>
+</html>
+
+
